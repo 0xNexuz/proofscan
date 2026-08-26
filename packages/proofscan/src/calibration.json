@@ -1,0 +1,8 @@
+{
+  "version": "claimbench-0.1.0-threshold-1",
+  "selectedOn": "validation",
+  "primaryObjective": "minimize_false_trust_rate",
+  "supportThreshold": 0.7,
+  "hardContradictionThreshold": 0.95,
+  "confidenceWeights": { "semantic": 0.85, "authority": 0.1, "freshness": 0.05 }
+}

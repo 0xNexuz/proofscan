@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: proofscan-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PROOFSCAN_API_KEY
+        generateValue: true
+      - key: PROOFSCAN_LOG_LEVEL
+        value: info

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+coverage/
+target/
+outputs/
+work/
+apps/console/public/benchmark.json

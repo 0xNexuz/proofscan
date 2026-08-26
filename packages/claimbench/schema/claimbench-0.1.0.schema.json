@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://proofscan.dev/schemas/claimbench-0.1.0.schema.json",
+  "title": "CLAIMBENCH case v0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "domain",
+    "difficulty",
+    "split",
+    "adversarialType",
+    "request",
+    "expected",
+    "provenance",
+    "reviewerNotes"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "version": { "const": "0.1.0" },
+    "domain": {
+      "enum": [
+        "technology",
+        "crypto",
+        "finance",
+        "companies",
+        "science",
+        "developer_documentation",
+        "news",
+        "public_data"
+      ]
+    },
+    "difficulty": { "enum": ["easy", "medium", "hard", "adversarial"] },
+    "split": { "enum": ["train", "validation", "test"] },
+    "adversarialType": { "type": ["string", "null"] },
+    "request": { "$ref": "#/$defs/request" },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "evidenceSpans", "source"],
+      "properties": {
+        "verdict": { "$ref": "#/$defs/verdict" },
+        "evidenceSpans": { "type": "array", "items": { "type": "string" } },
+        "source": { "type": ["string", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "title", "accessedAt"],
+      "properties": {
+        "url": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "accessedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "reviewerNotes": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "verdict": {
+      "enum": ["SUPPORTED", "CONTRADICTED", "INSUFFICIENT_EVIDENCE", "STALE", "SOURCE_UNAVAILABLE"]
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "maxLength": 100000 },
+        "url": { "type": "string", "maxLength": 2048 },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      },
+      "anyOf": [{ "required": ["text"] }, { "required": ["url"] }]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim"],
+      "properties": {
+        "claim": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "evidence": {
+          "oneOf": [
+            { "type": "string", "maxLength": 100000 },
+            {
+              "type": "array",
+              "maxItems": 5,
+              "items": { "$ref": "#/$defs/evidenceItem" }
+            }
+          ]
+        },
+        "source": { "type": "string", "maxLength": 2048 },
+        "asOf": { "type": "string", "format": "date-time" },
+        "maxEvidenceAgeDays": { "type": "integer", "minimum": 1, "maximum": 36500 }
+      },
+      "anyOf": [{ "required": ["evidence"] }, { "required": ["source"] }]
+    }
+  }
+}

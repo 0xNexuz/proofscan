@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+target/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+apps/console/public/benchmark.json
+benchmarks/runs/*.json
+outputs/
+work/

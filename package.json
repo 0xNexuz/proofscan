@@ -1,0 +1,31 @@
+{
+  "name": "proofscan",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @proofscan/contracts build && pnpm --filter @proofscan/core build && pnpm --parallel --filter @proofscan/api --filter @proofscan/console dev",
+    "lint": "eslint . --max-warnings=0",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm build && pnpm -r typecheck",
+    "test": "vitest run",
+    "benchmark": "pnpm build && pnpm --filter @proofscan/proofbench benchmark",
+    "claimbench:validate": "pnpm --filter @proofscan/contracts build && pnpm --filter @proofscan/claimbench validate",
+    "telegraph:validate": "node scripts/validate-telegraph-config.mjs",
+    "wasm:build": "cargo build --manifest-path packages/proofbench-wasm/Cargo.toml --release --target wasm32-unknown-unknown",
+    "wasm:test": "node scripts/test-wasm.mjs",
+    "verify": "pnpm lint && pnpm format:check && pnpm build && pnpm -r typecheck && pnpm test && pnpm claimbench:validate"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^4.0.14"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "ProofBench",
+  "version": "0.1.0",
+  "intent": "FACT_CHECK",
+  "target": "wasm32-unknown-unknown",
+  "artifact": "proofbench_wasm.wasm",
+  "exports": ["memory", "alloc", "dealloc", "rank_answer"],
+  "maxBytes": 33554432,
+  "status": "UNREGISTERED",
+  "registrationId": null,
+  "wasmUrl": null,
+  "wasmHash": null
+}
